@@ -1,6 +1,7 @@
 import Deploy from "./components/Deploy.jsx";
 import SectionPreview from "./components/SectionPreview.jsx";
 import Team from "./components/Team.jsx";
+import ButtonCollection from "./components/ButtonCollection.jsx";
 
 
 function App() {
@@ -24,12 +25,20 @@ function App() {
                         <Team/>
                     </SectionPreview>
 
+                    <hr className="my-3.5 text-gray-300"/>
+
+                    {/* Button collection */}
+                    <SectionPreview baseWidth={1400}>
+                        <ButtonCollection/>
+                    </SectionPreview>
+
                 </div>
 
                 {/* RIGHT PANEL (main canvas) */}
                 <div className="flex-1 overflow-y-auto bg-gray-50">
                     <Deploy/>
                     <Team/>
+                    <ButtonCollection/>
                 </div>
 
             </div>

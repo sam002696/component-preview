@@ -30,7 +30,7 @@ const SectionPreview = ({children, baseWidth = 1400}) => {
                 return (
                     <div
                         key={key}
-                        className="border border-gray-200 rounded-lg bg-gray-100 overflow-hidden"
+                        className="border border-gray-200 rounded-md bg-gray-100 overflow-hidden"
                         style={{
                             width,
                             height: scaledHeight || "auto",

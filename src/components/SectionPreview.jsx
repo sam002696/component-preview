@@ -1,22 +1,54 @@
-import React from 'react';
+import {useRef, useLayoutEffect, useState} from "react";
 
-const SectionPreview = ({children, width = 1400, previewWidth = 300}) => {
-    const scale = previewWidth / width;
+const PREVIEW_SIZES = [
+    {key: "lg", width: 300},
+    {key: "sm", width: 220},
+    {key: "xs", width: 160},
+];
+
+const SectionPreview = ({children, baseWidth = 1400}) => {
+    const contentRef = useRef(null);
+    const [contentHeight, setContentHeight] = useState(0);
+
+    useLayoutEffect(() => {
+        if (!contentRef.current) return;
+
+        const observer = new ResizeObserver(([entry]) => {
+            setContentHeight(entry.contentRect.height);
+        });
+
+        observer.observe(contentRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     return (
-        <div
-            className="overflow-hidden border border-gray-200 rounded-lg bg-gray-100"
-            style={{width: previewWidth}}
-        >
-            <div
-                style={{
-                    width,
-                    transform: `scale(${scale})`,
-                    transformOrigin: "top left",
-                }}
-            >
-                {children}
-            </div>
+        <div className="space-y-2">
+            {PREVIEW_SIZES.map(({key, width}) => {
+                const scale = width / baseWidth;
+                const scaledHeight = contentHeight * scale;
+
+                return (
+                    <div
+                        key={key}
+                        className="border border-gray-200 rounded-lg bg-gray-100 overflow-hidden"
+                        style={{
+                            width,
+                            height: scaledHeight || "auto",
+                        }}
+                    >
+                        <div
+                            style={{
+                                width: baseWidth,
+                                transform: `scale(${scale})`,
+                                transformOrigin: "top left",
+                                pointerEvents: "none",
+                            }}
+                        >
+                            <div ref={contentRef}>{children}</div>
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
 };

@@ -6,7 +6,11 @@ const PREVIEW_SIZES = [
     {key: "xs", width: 160},
 ];
 
-const SectionPreview = ({children, baseWidth = 1400}) => {
+const SectionPreview = ({
+                            children,
+                            baseWidth = 1400,
+                            previewBaseWidth = 1400,
+                        }) => {
     const contentRef = useRef(null);
     const [contentHeight, setContentHeight] = useState(0);
 
@@ -24,7 +28,7 @@ const SectionPreview = ({children, baseWidth = 1400}) => {
     return (
         <div className="space-y-2">
             {PREVIEW_SIZES.map(({key, width}) => {
-                const scale = width / baseWidth;
+                const scale = width / previewBaseWidth;
                 const scaledHeight = contentHeight * scale;
 
                 return (

@@ -15,14 +15,14 @@ function App() {
                 <div className="w-[320px] h-screen bg-white p-4 overflow-y-auto shrink-0">
 
                     {/* Deploy previews */}
-                    <SectionPreview baseWidth={1400}>
+                    <SectionPreview baseWidth={1400} previewBaseWidth={1400}>
                         <Deploy/>
                     </SectionPreview>
 
                     <hr className="my-3.5 text-gray-300"/>
 
                     {/* Team previews */}
-                    <SectionPreview baseWidth={1400}>
+                    <SectionPreview baseWidth={1400} previewBaseWidth={1400}>
                         <Team/>
                     </SectionPreview>
 
@@ -30,7 +30,7 @@ function App() {
 
                     {/* Button collection */}
 
-                    <SectionPreview baseWidth={1400}>
+                    <SectionPreview baseWidth={1400} previewBaseWidth={600}>
                         <ButtonCollection/>
                     </SectionPreview>
 
@@ -38,7 +38,7 @@ function App() {
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview baseWidth={1400}>
+                    <SectionPreview baseWidth={1400} previewBaseWidth={300}>
                         <Button/>
                     </SectionPreview>
 

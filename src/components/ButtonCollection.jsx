@@ -4,7 +4,7 @@ const ButtonCollection = () => {
     return (
         <div className="w-full bg-white">
             <div
-                className="flex items-center gap-6 px-8 py-6  overflow-x-auto ">
+                className="flex items-center gap-6 px-3 py-6  overflow-x-auto ">
 
                 <button
                     type="button"

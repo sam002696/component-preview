@@ -7,7 +7,7 @@ const Button = ({
                 }) => {
 
     return (
-        <div className="px-5 py-3 bg-white">
+        <div className="px-2 py-3 bg-white">
             <button
                 onClick={onClick}
                 disabled={disabled}

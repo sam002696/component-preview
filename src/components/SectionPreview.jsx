@@ -10,6 +10,7 @@ const SectionPreview = ({
                             children,
                             baseWidth = 1400,
                             previewBaseWidth = 1400,
+                            previewAlign = "center",
                         }) => {
     const contentRef = useRef(null);
     const [contentHeight, setContentHeight] = useState(0);

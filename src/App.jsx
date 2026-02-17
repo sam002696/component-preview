@@ -4,6 +4,7 @@ import Team from "./components/Team.jsx";
 import ButtonCollection from "./components/ButtonCollection.jsx";
 import Button from "./components/Button.jsx";
 import Input from "./components/Input.jsx";
+import IconGroup from "./components/IconGroup.jsx";
 
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview baseWidth={1400} previewBaseWidth={300}>
+                    <SectionPreview baseWidth={1400} previewBaseWidth={300} previewAlign="center">
                         <Button/>
                     </SectionPreview>
 
@@ -47,6 +48,12 @@ function App() {
 
                     <SectionPreview baseWidth={1400} previewBaseWidth={300}>
                         <Input/>
+                    </SectionPreview>
+
+                    <hr className="my-3.5 text-gray-300"/>
+
+                    <SectionPreview baseWidth={1400} previewBaseWidth={300}>
+                        <IconGroup/>
                     </SectionPreview>
 
                 </div>
@@ -58,6 +65,7 @@ function App() {
                     <ButtonCollection/>
                     <Button/>
                     <Input/>
+                    <IconGroup/>
                 </div>
 
             </div>

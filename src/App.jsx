@@ -3,6 +3,7 @@ import SectionPreview from "./components/SectionPreview.jsx";
 import Team from "./components/Team.jsx";
 import ButtonCollection from "./components/ButtonCollection.jsx";
 import Button from "./components/Button.jsx";
+import Input from "./components/Input.jsx";
 
 
 function App() {
@@ -42,6 +43,12 @@ function App() {
                         <Button/>
                     </SectionPreview>
 
+                    <hr className="my-3.5 text-gray-300"/>
+
+                    <SectionPreview baseWidth={1400} previewBaseWidth={300}>
+                        <Input/>
+                    </SectionPreview>
+
                 </div>
 
                 {/* RIGHT PANEL (main canvas) */}
@@ -50,6 +57,7 @@ function App() {
                     <Team/>
                     <ButtonCollection/>
                     <Button/>
+                    <Input/>
                 </div>
 
             </div>

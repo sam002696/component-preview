@@ -2,6 +2,7 @@ import Deploy from "./components/Deploy.jsx";
 import SectionPreview from "./components/SectionPreview.jsx";
 import Team from "./components/Team.jsx";
 import ButtonCollection from "./components/ButtonCollection.jsx";
+import Button from "./components/Button.jsx";
 
 
 function App() {
@@ -28,8 +29,17 @@ function App() {
                     <hr className="my-3.5 text-gray-300"/>
 
                     {/* Button collection */}
+
                     <SectionPreview baseWidth={1400}>
                         <ButtonCollection/>
+                    </SectionPreview>
+
+                    {/* Single button */}
+
+                    <hr className="my-3.5 text-gray-300"/>
+
+                    <SectionPreview baseWidth={1400}>
+                        <Button/>
                     </SectionPreview>
 
                 </div>
@@ -39,6 +49,7 @@ function App() {
                     <Deploy/>
                     <Team/>
                     <ButtonCollection/>
+                    <Button/>
                 </div>
 
             </div>

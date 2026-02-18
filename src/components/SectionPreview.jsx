@@ -6,6 +6,12 @@ const PREVIEW_SIZES = [
     {key: "xs", width: 160},
 ];
 
+const ELEMENT_SCALE_BY_PREVIEW = {
+    300: 1.3,   // large
+    220: 0.98,  // medium
+    160: 0.6,   // small
+};
+
 
 const PreviewItem = ({width, children}) => {
 
@@ -33,7 +39,18 @@ const PreviewItem = ({width, children}) => {
     const hasMeasurement = measured.width > 0 && measured.height > 0;
 
     const isSection = hasMeasurement ? measured.width > width : false;
-    const scale = hasMeasurement ? width / measured.width : 1;
+    let scale = 1;
+
+    if (hasMeasurement) {
+        if (measured.width > width) {
+            // section
+            scale = width / measured.width;
+        } else {
+            // element
+            scale = ELEMENT_SCALE_BY_PREVIEW[width] ?? 0.75;
+        }
+    }
+
 
     return (
         <div

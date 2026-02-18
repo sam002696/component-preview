@@ -1,71 +1,71 @@
 import {useRef, useLayoutEffect, useState} from "react";
 
-const PREVIEW_SIZES = [
-    {key: "lg", width: 300},
-    {key: "sm", width: 220},
-    {key: "xs", width: 160},
-];
-
-const ELEMENT_SCALE_BY_PREVIEW = {
-    300: 1.3,   // large
-    220: 0.98,  // medium
-    160: 0.6,   // small
-};
-
-
-const PreviewItem = ({width, children}) => {
-
+const PreviewItem = ({children}) => {
     const measureRef = useRef(null);
+    const previewRef = useRef(null);
 
     const [measured, setMeasured] = useState({
-        width: 0,
-        height: 0,
+        contentWidth: 0,
+        contentHeight: 0,
+        previewWidth: 0,
     });
 
     useLayoutEffect(() => {
-        if (!measureRef.current) return;
+        if (!measureRef.current || !previewRef.current) return;
 
-        const ro = new ResizeObserver(([entry]) => {
+        const update = () => {
             setMeasured({
-                width: entry.contentRect.width,
-                height: entry.contentRect.height,
+                contentWidth: measureRef.current.offsetWidth,
+                contentHeight: measureRef.current.offsetHeight,
+                previewWidth: previewRef.current.offsetWidth,
             });
-        });
+        };
 
+        update();
+
+        const ro = new ResizeObserver(update);
         ro.observe(measureRef.current);
+        ro.observe(previewRef.current);
+
         return () => ro.disconnect();
     }, []);
 
-    const hasMeasurement = measured.width > 0 && measured.height > 0;
+    const hasMeasurement =
+        measured.contentWidth > 0 &&
+        measured.contentHeight > 0 &&
+        measured.previewWidth > 0;
 
-    const isSection = hasMeasurement ? measured.width > width : false;
+    const isSection =
+        hasMeasurement && measured.contentWidth > measured.previewWidth;
+
     let scale = 1;
 
     if (hasMeasurement) {
-        if (measured.width > width) {
-            // section
-            scale = width / measured.width;
+        if (isSection) {
+            scale = measured.previewWidth / measured.contentWidth;
         } else {
-            // element
-            scale = ELEMENT_SCALE_BY_PREVIEW[width] ?? 0.75;
+            scale = Math.sqrt(
+                measured.previewWidth / measured.contentWidth
+            );
         }
     }
 
-
     return (
         <div
+            ref={previewRef}
             className={`border border-gray-200 rounded-md overflow-hidden ${
-                !isSection && hasMeasurement ? "flex justify-center items-center p-3" : ""
+                !isSection && hasMeasurement
+                    ? "flex justify-center items-center p-3"
+                    : ""
             }`}
             style={{
-                width,
                 height:
                     hasMeasurement && isSection
-                        ? measured.height * scale
+                        ? measured.contentHeight * scale
                         : "auto",
             }}
         >
-            {/* Hidden measurer (ALWAYS rendered) */}
+            {/* Hidden measurer */}
             <div
                 ref={measureRef}
                 style={{
@@ -80,13 +80,15 @@ const PreviewItem = ({width, children}) => {
                 {children}
             </div>
 
-            {/*  Visible preview (only after measurement) */}
+            {/* Visible preview */}
             {hasMeasurement && (
                 <div
                     style={{
-                        width: measured.width,
+                        width: measured.contentWidth,
                         transform: `scale(${scale})`,
-                        transformOrigin: isSection ? "top left" : "center",
+                        transformOrigin: isSection
+                            ? "top left"
+                            : "center",
                         pointerEvents: "none",
                     }}
                 >
@@ -99,14 +101,21 @@ const PreviewItem = ({width, children}) => {
 
 const Preview = ({children}) => {
     return (
-        <div className="space-y-2">
-            {PREVIEW_SIZES.map(({key, width}) => (
-                <PreviewItem key={key} width={width}>
-                    {children}
-                </PreviewItem>
-            ))}
+        <div className="flex flex-col gap-2">
+            <div className="w-full">
+                <PreviewItem>{children}</PreviewItem>
+            </div>
+
+            <div className="w-2/4">
+                <PreviewItem>{children}</PreviewItem>
+            </div>
+
+            <div className="w-1/3">
+                <PreviewItem>{children}</PreviewItem>
+            </div>
         </div>
     );
 };
+
 
 export default Preview;

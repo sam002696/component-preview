@@ -6,88 +6,70 @@ const PREVIEW_SIZES = [
     {key: "xs", width: 160},
 ];
 
-const PreviewItem = ({
-                         width,
-                         children,
-                         previewType,
-                         baseWidth,
-                         previewBaseWidth,
-                         elementBaseWidth,
-                     }) => {
-    const measureRef = useRef(null);
-    const [measuredHeight, setMeasuredHeight] = useState(0);
 
-    //  Measuring untransformed content
+const PreviewItem = ({width, children}) => {
+
+    const measureRef = useRef(null);
+
+    const [measured, setMeasured] = useState({
+        width: 0,
+        height: 0,
+    });
+
     useLayoutEffect(() => {
         if (!measureRef.current) return;
 
         const ro = new ResizeObserver(([entry]) => {
-            setMeasuredHeight(entry.contentRect.height);
+            setMeasured({
+                width: entry.contentRect.width,
+                height: entry.contentRect.height,
+            });
         });
 
         ro.observe(measureRef.current);
         return () => ro.disconnect();
     }, []);
 
-    const scale =
-        previewType === "section"
-            ? width / previewBaseWidth
-            : width / elementBaseWidth;
+    const hasMeasurement = measured.width > 0 && measured.height > 0;
+
+    const isSection = hasMeasurement ? measured.width > width : false;
+    const scale = hasMeasurement ? width / measured.width : 1;
 
     return (
         <div
             className={`border border-gray-200 rounded-md overflow-hidden ${
-                previewType === "element"
-                    ? "flex justify-center items-center"
-                    : ""
+                !isSection && hasMeasurement ? "flex justify-center items-center p-3" : ""
             }`}
             style={{
                 width,
                 height:
-                    previewType === "section" && measuredHeight > 0
-                        ? measuredHeight * scale
+                    hasMeasurement && isSection
+                        ? measured.height * scale
                         : "auto",
-                padding: previewType === "element" ? 12 : 0,
             }}
         >
+            {/* Hidden measurer (ALWAYS rendered) */}
+            <div
+                ref={measureRef}
+                style={{
+                    width: "max-content",
+                    position: "fixed",
+                    top: -10000,
+                    left: -10000,
+                    visibility: "hidden",
+                    pointerEvents: "none",
+                }}
+            >
+                {children}
+            </div>
 
-            {/*  Hidden measurer (real layout, no scale) */}
-            {previewType === "section" && (
-                <div
-                    ref={measureRef}
-                    style={{
-                        width: baseWidth,
-                        position: "fixed",
-                        top: -10000,
-                        left: -10000,
-                        visibility: "hidden",
-                        pointerEvents: "none",
-                    }}
-                >
-                    {children}
-                </div>
-            )}
-
-            {/* Visible preview */}
-            {previewType === "section" && (
+            {/*  Visible preview (only after measurement) */}
+            {hasMeasurement && (
                 <div
                     style={{
-                        width: baseWidth,
+                        width: measured.width,
                         transform: `scale(${scale})`,
-                        transformOrigin: "top left",
-                        pointerEvents: "none",
-                    }}
-                >
-                    {children}
-                </div>
-            )}
-
-            {/*  Element preview */}
-            {previewType === "element" && (
-                <div
-                    style={{
-                        transform: `scale(${scale})`,
-                        transformOrigin: "center",
+                        transformOrigin: isSection ? "top left" : "center",
                         pointerEvents: "none",
                     }}
                 >
@@ -98,24 +80,11 @@ const PreviewItem = ({
     );
 };
 
-const SectionPreview = ({
-                            children,
-                            baseWidth = 1400,
-                            previewBaseWidth = 1400,
-                            previewType = "section",
-                            elementBaseWidth = 300,
-                        }) => {
+const SectionPreview = ({children}) => {
     return (
         <div className="space-y-2">
             {PREVIEW_SIZES.map(({key, width}) => (
-                <PreviewItem
-                    key={key}
-                    width={width}
-                    previewType={previewType}
-                    baseWidth={baseWidth}
-                    previewBaseWidth={previewBaseWidth}
-                    elementBaseWidth={elementBaseWidth}
-                >
+                <PreviewItem key={key} width={width}>
                     {children}
                 </PreviewItem>
             ))}

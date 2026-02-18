@@ -1,7 +1,6 @@
 import Deploy from "./components/Deploy.jsx";
 import SectionPreview from "./components/SectionPreview.jsx";
 import Team from "./components/Team.jsx";
-// import ButtonCollection from "./components/ButtonCollection.jsx";
 import Button from "./components/Button.jsx";
 import Input from "./components/Input.jsx";
 import IconGroup from "./components/IconGroup.jsx";
@@ -17,7 +16,7 @@ function App() {
                 <div className="w-[320px] h-screen bg-white p-4 overflow-y-auto shrink-0">
 
                     {/* Deploy previews */}
-                    <SectionPreview previewType="section"
+                    <SectionPreview
                     >
                         <Deploy/>
                     </SectionPreview>
@@ -25,36 +24,28 @@ function App() {
                     <hr className="my-3.5 text-gray-300"/>
 
                     {/* Team previews */}
-                    <SectionPreview previewType="section"
+                    <SectionPreview
                     >
                         <Team/>
                     </SectionPreview>
-
-                    {/*<hr className="my-3.5 text-gray-300"/>*/}
-
-                    {/* Button collection */}
-
-                    {/*<SectionPreview previewType="element">*/}
-                    {/*    <ButtonCollection/>*/}
-                    {/*</SectionPreview>*/}
 
                     {/* Single button */}
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview previewType="element">
+                    <SectionPreview>
                         <Button/>
                     </SectionPreview>
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview previewType="element">
+                    <SectionPreview>
                         <Input/>
                     </SectionPreview>
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview previewType="element">
+                    <SectionPreview>
                         <IconGroup/>
                     </SectionPreview>
 
@@ -64,7 +55,6 @@ function App() {
                 <div className="flex-1 overflow-y-auto bg-gray-50">
                     <Deploy/>
                     <Team/>
-                    {/*<ButtonCollection/>*/}
                     <Button/>
                     <Input/>
                     <IconGroup/>

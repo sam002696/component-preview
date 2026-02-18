@@ -1,5 +1,5 @@
 import Deploy from "./components/Deploy.jsx";
-import SectionPreview from "./components/SectionPreview.jsx";
+import Preview from "./components/Preview.jsx";
 import Team from "./components/Team.jsx";
 import Button from "./components/Button.jsx";
 import Input from "./components/Input.jsx";
@@ -16,38 +16,38 @@ function App() {
                 <div className="w-[320px] h-screen bg-white p-4 overflow-y-auto shrink-0">
 
                     {/* Deploy previews */}
-                    <SectionPreview
+                    <Preview
                     >
                         <Deploy/>
-                    </SectionPreview>
+                    </Preview>
 
                     <hr className="my-3.5 text-gray-300"/>
 
                     {/* Team previews */}
-                    <SectionPreview
+                    <Preview
                     >
                         <Team/>
-                    </SectionPreview>
+                    </Preview>
 
                     {/* Single button */}
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview>
+                    <Preview>
                         <Button/>
-                    </SectionPreview>
+                    </Preview>
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview>
+                    <Preview>
                         <Input/>
-                    </SectionPreview>
+                    </Preview>
 
                     <hr className="my-3.5 text-gray-300"/>
 
-                    <SectionPreview>
+                    <Preview>
                         <IconGroup/>
-                    </SectionPreview>
+                    </Preview>
 
                 </div>
 

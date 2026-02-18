@@ -97,7 +97,7 @@ const PreviewItem = ({width, children}) => {
     );
 };
 
-const SectionPreview = ({children}) => {
+const Preview = ({children}) => {
     return (
         <div className="space-y-2">
             {PREVIEW_SIZES.map(({key, width}) => (
@@ -109,4 +109,4 @@ const SectionPreview = ({children}) => {
     );
 };
 
-export default SectionPreview;
+export default Preview;
